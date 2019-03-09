@@ -1,0 +1,8 @@
+---
+- name: install docker on a vagrant machine
+  hosts: all
+# more elegant than using become after every single command that needs root I guess
+  become: true
+  any_errors_fatal: true
+  roles:
+    - docker

@@ -1,0 +1,11 @@
+---
+
+- name: add key for Docker repository
+  apt_key: url="{{ item }}" state=present
+  with_items:
+    - https://download.docker.com/linux/ubuntu/gpg
+
+- name: add Docker repository
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+    - "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vagrant_image }} stable"

@@ -1,0 +1,5 @@
+vagrant_image: xenial
+
+#because xenial image does not have python2 by default 
+ansible_python_interpreter: "/usr/bin/python3"
+
