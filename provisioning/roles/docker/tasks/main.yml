@@ -9,3 +9,24 @@
   apt_repository: repo="{{ item }}" state=present
   with_items:
     - "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ vagrant_image }} stable"
+
+- name: Install Docker CE
+  apt: pkg=docker-ce update_cache=yes 
+
+- name: Download Docker Machine
+  get_url:
+    url: https://github.com/docker/machine/releases/download/v{{ docker_machine_version }}/docker-machine-{{ system }}-{{ architecture }} 
+    dest: /usr/local/bin/docker-machine
+    mode: 0755
+
+- name: Download Docker Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ system }}-{{ architecture }} 
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
+
+- name: Add user vagrant to docker group
+  user:
+    name: '{{ vagrant_user }}'
+    groups: docker
+    append: yes

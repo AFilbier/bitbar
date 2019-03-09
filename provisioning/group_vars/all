@@ -1,5 +1,9 @@
-vagrant_image: xenial
+vagrant_image: "xenial"
+vagrant_user: "vagrant"
+system: "Linux"
+architecture: "x86_64"
 
-#because xenial image does not have python2 by default 
 ansible_python_interpreter: "/usr/bin/python3"
 
+docker_machine_version: "0.16.1"
+docker_compose_version: "1.23.2"

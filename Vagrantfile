@@ -7,7 +7,6 @@ Vagrant.configure("2") do |config|
 # Ubuntu 16.04 LTS
   config.vm.hostname = "bitbar"
   config.vm.box = "ubuntu/xenial64"
-# config.vm.define "host1"
 
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
@@ -27,10 +26,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provisioning/play.yml"
-#    ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
-#    ansible.host_vars = {
-#      "host1" => {http_port => 80, "maxRequestsRepChild" => 808}
-#    }
   end
 
 end
