@@ -18,7 +18,7 @@ Dodatkowym atutem byłoby użycie kontenerów Dockera https://www.docker.com/ dl
 
 
 
-##Wykonanie:
+## Wykonanie:
 
 * Host: Arch Linux, Vagrant 2.2.4, Vbox 6.04, Docker CE 18.09.3
 * Dla Vagranta użyłem obrazu Ubuntu 16.04.
