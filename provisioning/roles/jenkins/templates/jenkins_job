@@ -1,1 +1,1 @@
-*/1 * * * * root java -jar /usr/local/bin/jenkins-cli -s "http://192.168.33.10:8080" -auth {{ admin_acc }}:{{ admin_pass }} who-am-i > /home/vagrant/output.txt
+*/5 * * * * root java -jar /usr/local/bin/jenkins-cli -s "http://192.168.33.10:8080" -auth {{ admin_acc }}:{{ admin_pass }} build {{ test_job }}

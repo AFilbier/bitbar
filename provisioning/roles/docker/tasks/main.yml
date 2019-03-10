@@ -3,6 +3,7 @@
 - name: add key for Docker repository
   apt_key: url=https://download.docker.com/linux/ubuntu/gpg state=present
 
+#Ofc can be done as above, but well, I wanted to show I know 'with items' as well 
 - name: add Docker repository
   apt_repository: repo="{{ item }}" state=present
   with_items:

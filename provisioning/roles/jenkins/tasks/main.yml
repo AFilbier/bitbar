@@ -34,7 +34,6 @@
     path: "{{ vagrant_home }}"
     name: "{{ jcasc_name }}"
 
-
 - name: Create Jenkins container
   docker_container:
     detach: yes
@@ -47,11 +46,10 @@
     volumes:
       - /var/jenkins_home
     env:
-      CASC_JENKINS_CONFIG: "https://pastebin.com/raw/NWX4iZTM"
+      CASC_JENKINS_CONFIG: "https://raw.githubusercontent.com/AFilbier/bitbar/master/jenkins.yaml"
       ACC: "{{ admin_acc }}"
       PASS: "{{ admin_pass }}"
       SPASS: "{{ sys_pass }}"
-
 
 - name: Install Java for Jenkins CLI
   apt: pkg=default-jre update_cache=yes
@@ -67,6 +65,24 @@
     dest: /usr/local/bin/jenkins-cli
     mode: 0755
 
+- name: Copy CLI job script 
+  template: 
+    src: create_job.sh 
+    dest: "{{ vagrant_home }}"
+    owner: vagrant 
+    mode: 0755
+
+- name: Copy job template
+  copy:
+    src: job.xml
+    dest: "{{ vagrant_home }}"
+    owner: vagrant
+    mode: 0644
+
+# I'm not a fan of shell, but it gets the job done
+- name: Create Jenkins job
+  shell: "{{ vagrant_home }}/create_job.sh" 
+
 - name: Copy cron job 
   template: 
     src: jenkins_job 
@@ -74,8 +90,3 @@
     owner: root 
     group: root 
     mode: 0644
-
-
-
-
-
