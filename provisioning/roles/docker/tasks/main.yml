@@ -1,9 +1,7 @@
 ---
 
 - name: add key for Docker repository
-  apt_key: url="{{ item }}" state=present
-  with_items:
-    - https://download.docker.com/linux/ubuntu/gpg
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg state=present
 
 - name: add Docker repository
   apt_repository: repo="{{ item }}" state=present
@@ -15,13 +13,13 @@
 
 - name: Download Docker Machine
   get_url:
-    url: https://github.com/docker/machine/releases/download/v{{ docker_machine_version }}/docker-machine-{{ system }}-{{ architecture }} 
+    url: https://github.com/docker/machine/releases/download/v{{ docker_machine_version }}/docker-machine-{{ os }}-{{ architecture }} 
     dest: /usr/local/bin/docker-machine
     mode: 0755
 
 - name: Download Docker Compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ system }}-{{ architecture }} 
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ os }}-{{ architecture }} 
     dest: /usr/local/bin/docker-compose
     mode: 0755
 

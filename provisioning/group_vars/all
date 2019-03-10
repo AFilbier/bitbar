@@ -1,6 +1,6 @@
 vagrant_image: "xenial"
 vagrant_user: "vagrant"
-system: "Linux"
+os: "Linux"
 architecture: "x86_64"
 
 ansible_python_interpreter: "/usr/bin/python3"
