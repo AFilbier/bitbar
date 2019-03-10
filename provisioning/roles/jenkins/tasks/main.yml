@@ -12,22 +12,49 @@
     executable: pip3
     name: docker
 
-- name: Pull Jenkins image
+- name: Pull official Jenkins image
   docker_image:
     name: "{{ jenkins_image }}"
     state: present
+
+# zbuduj customowy image z pluginami
+# ponieważ Jenkins to rak
+- name: Copy customized Dockerfile 
+  template: 
+    src: Dockerfile 
+    dest: "{{ vagrant_home }}"
+    owner: vagrant 
+    group: docker 
+    mode: 0644
+
+#docker image build -t jenkins_jcasc .
+- name: Build Jenkins JCasC image
+  docker_image:
+    path: "{{ vagrant_home }}"
+    name: "{{ jcasc_name }}"
+
 
 - name: Create Jenkins container
   docker_container:
 #   docker_host: unix://var/run/docker.sock
     detach: yes
     name: Jenkins_server
-    image: "{{ jenkins_image }}" 
+    image: "{{ jcasc_name }}" 
     state: started
     published_ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - /var/jenkins_home
+#    env:
+#        CASC_JENKINS_CONFIG: "https://raw.githubusercontent.com/CodeBabel/JCasC-Demo/master/Jenkins-JCasC.yml"
 
 
+- name: Install Java for Jenkins CLI
+  apt: pkg=default-jre update_cache=yes
+
+- name: Download CLI client from Jenkins server 
+  get_url:
+    url: http://localhost:8080/jnlpJars/jenkins-cli.jar
+    dest: /usr/local/bin/jenkins-cli
+    mode: 0755

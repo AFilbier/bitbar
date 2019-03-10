@@ -9,3 +9,5 @@ docker_machine_version: "0.16.1"
 docker_compose_version: "1.23.2"
 
 jenkins_image: "jenkins/jenkins"
+jcasc_name: "jenkins_jcasc"
+vagrant_home: "/home/vagrant"

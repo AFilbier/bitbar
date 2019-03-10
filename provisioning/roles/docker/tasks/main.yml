@@ -23,6 +23,7 @@
     dest: /usr/local/bin/docker-compose
     mode: 0755
 
+# To make testing easier
 - name: Add user vagrant to docker group
   user:
     name: '{{ vagrant_user }}'
