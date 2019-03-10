@@ -1,0 +1,39 @@
+jenkins:
+  systemMessage: "Jenkins configured automagically with Jenkins Configuration as Code Plugin"
+  agentProtocols:
+    - "JNLP4-connect"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: ${ACC}
+         password: ${PASS}
+  authorizationStrategy:
+    globalMatrix:
+      grantedPermissions:
+        - "Overall/Read:anonymous"
+        - "Job/Read:anonymous"
+        - "View/Read:anonymous"
+        - "Overall/Administer:authenticated"
+  crumbIssuer: "standard"
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope:    SYSTEM
+              id:       root
+              username: root
+              password: ${SPASS} 
+tool:
+  git:
+    installations:
+      - name: Default
+        home: "git"
+
+unclassified:
+  location:
+    url: http://192.168.33.10
+    adminAddress: test@jenkins.test
+
+

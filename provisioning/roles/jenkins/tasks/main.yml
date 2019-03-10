@@ -1,5 +1,7 @@
 ---
 
+- include_vars: secrets.yml
+
 - name: Install pip3
   apt:
     update_cache: yes
@@ -17,8 +19,7 @@
     name: "{{ jenkins_image }}"
     state: present
 
-# zbuduj customowy image z pluginami
-# ponieważ Jenkins to rak
+# Create a custom Jenkins image with additional plugins
 - name: Copy customized Dockerfile 
   template: 
     src: Dockerfile 
@@ -36,7 +37,6 @@
 
 - name: Create Jenkins container
   docker_container:
-#   docker_host: unix://var/run/docker.sock
     detach: yes
     name: Jenkins_server
     image: "{{ jcasc_name }}" 
@@ -46,15 +46,36 @@
       - "50000:50000"
     volumes:
       - /var/jenkins_home
-#    env:
-#        CASC_JENKINS_CONFIG: "https://raw.githubusercontent.com/CodeBabel/JCasC-Demo/master/Jenkins-JCasC.yml"
+    env:
+      CASC_JENKINS_CONFIG: "https://pastebin.com/raw/NWX4iZTM"
+      ACC: "{{ admin_acc }}"
+      PASS: "{{ admin_pass }}"
+      SPASS: "{{ sys_pass }}"
 
 
 - name: Install Java for Jenkins CLI
   apt: pkg=default-jre update_cache=yes
 
+# To make sure jenkins can actually initialize before we attempt to download plugin from it
+- pause:
+    minutes: 1
+
+# Obviously fail if Jenkins container is not running
 - name: Download CLI client from Jenkins server 
   get_url:
     url: http://localhost:8080/jnlpJars/jenkins-cli.jar
     dest: /usr/local/bin/jenkins-cli
     mode: 0755
+
+- name: Copy cron job 
+  template: 
+    src: jenkins_job 
+    dest: /etc/cron.d
+    owner: root 
+    group: root 
+    mode: 0644
+
+
+
+
+

@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
 #  config.vm.provision "shell", path: "install_docker.sh"
 
   config.vm.provision "ansible" do |ansible|
+    ansible.vault_password_file = "provisioning/pass"
     ansible.playbook = "provisioning/play.yml"
   end
 

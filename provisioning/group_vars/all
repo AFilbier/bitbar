@@ -11,3 +11,7 @@ docker_compose_version: "1.23.2"
 jenkins_image: "jenkins/jenkins"
 jcasc_name: "jenkins_jcasc"
 vagrant_home: "/home/vagrant"
+
+#admin_acc: "admin" 
+#admin_pass: "admin"
+#sys_pass: "root"
