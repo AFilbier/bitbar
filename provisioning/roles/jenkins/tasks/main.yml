@@ -12,7 +12,22 @@
     executable: pip3
     name: docker
 
-- name: pull Jenkins image
+- name: Pull Jenkins image
   docker_image:
-    name: jenkins/jenkins
+    name: "{{ jenkins_image }}"
     state: present
+
+- name: Create Jenkins container
+  docker_container:
+#   docker_host: unix://var/run/docker.sock
+    detach: yes
+    name: Jenkins_server
+    image: "{{ jenkins_image }}" 
+    state: started
+    published_ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /var/jenkins_home
+
+
